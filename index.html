@@ -11,14 +11,71 @@
       --bg-color: #f1f5f9;
       --card-bg: #ffffff;
       --text-main: #0f172a;
+      --banner-blue: #004360;
     }
 
     body {
       font-family: -apple-system, system-ui, sans-serif;
       background-color: var(--bg-color);
       margin: 0;
-      padding: 20px; /* Reduced padding for mobile */
+      padding: 0; /* Reset for banner flushness */
       top: 0 !important;
+    }
+
+    /* Main content padding to preserve original look */
+    .header, .feed-container, #status-msg {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    
+    .header {
+      padding-top: 30px;
+    }
+
+    /* New Banner Styles */
+    .i-team-banner {
+      background-color: var(--banner-blue);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .banner-left {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      flex: 1;
+    }
+
+    .banner-logo {
+      height: 45px;
+      width: auto;
+    }
+
+    .banner-text {
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 900px;
+      margin: 0;
+    }
+
+    .survey-button {
+      background-color: white;
+      color: var(--banner-blue);
+      text-decoration: none;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .survey-button:hover {
+      opacity: 0.9;
     }
 
     /* Google Translate Hiding */
@@ -136,7 +193,7 @@
     /* Optimized Feed Layout */
     .feed-container {
       display: flex;
-      flex-wrap: wrap; /* Allows columns to drop down on smaller screens */
+      flex-wrap: wrap;
       gap: 20px;
       max-width: 1200px;
       margin: 0 auto;
@@ -145,7 +202,7 @@
 
     .column {
       flex: 1;
-      min-width: 300px; /* Minimum width before it wraps */
+      min-width: 300px;
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -203,9 +260,17 @@
 
     /* Mobile Responsive Tweaks */
     @media (max-width: 768px) {
-      body { padding: 15px; }
+      .i-team-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+      }
+      .banner-left {
+        flex-direction: column;
+      }
       .header h1 { font-size: 1.5rem; }
-      .column { min-width: 100%; } /* Stack cards fully on mobile */
+      .column { min-width: 100%; }
       .post-content { padding: 15px; }
       .post-author { padding: 0 15px 15px 15px; }
     }
@@ -213,6 +278,16 @@
 </head>
 
 <body>
+  <div class="i-team-banner">
+    <div class="banner-left">
+      <img src="logo.png" alt="Chattanooga Logo" class="banner-logo">
+      <p class="banner-text">
+        This site is a prototype currently being tested by the Chattanooga Innovation Team (i-team) — it was built in direct response to what residents told us they need. The Chattanooga i-team bridges what residents need with how the city makes decisions, working alongside community members, local organizations, and city departments to turn gaps into opportunities. We are still working to improve this tool based on resident feedback, please let us know what would make this tool more useful.
+      </p>
+    </div>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeiqIRddsindAw5gyvsWw0bCnnbzBgxh0-rZzzk7JJ1WYTziQ/viewform?usp=sharing&ouid=103538615642769301622" target="_blank" class="survey-button">User Survey</a>
+  </div>
+
   <div id="google_translate_element"></div>
 
   <div class="header">
@@ -395,7 +470,6 @@
 
         const cardHtml = `<a href="${post.url}" class="post-card" target="_blank">${imgTag}${textTag}${authorTag}</a>`;
         
-        // Distribution logic for multi-column wrapping
         cols[visibleCount % 3].insertAdjacentHTML('beforeend', cardHtml);
         visibleCount++;
       });
