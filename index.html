@@ -428,17 +428,7 @@
           if (match) imageSrc = match[1];
         }
 
-        const rawText = (post.content_text || "").trim();
-        
-        let processedText = rawText;
-        if (activeFilter === "City Job Postings") {
-          const boilerplate = "Our mission is to work together to build a safe, vibrant, and sustainable city for all Chattanoogans. To do that, it takes a team of skilled and passionate individuals. So, if you’d like to call Chattanooga home – or maybe you already do! – and want to further your career through meaningful work that makes a true impact where you live, we’d love to talk to you.";
-          const index = processedText.indexOf(boilerplate);
-          if (index !== -1) {
-            processedText = processedText.substring(index + boilerplate.length).trim();
-          }
-        }
-
+        // Determine the item's mapped author/category first
         let authorName = (post.authors && post.authors[0]) ? post.authors[0].name : "";
 
         const NAME_CLEANUP = {
@@ -464,6 +454,20 @@
           }
         }
 
+        const rawText = (post.content_text || "").trim();
+        let processedText = rawText;
+
+        // Apply cleaning rule if on Job Postings page OR if the specific item belongs to Job Postings
+        const isJobPosting = (activeFilter === "City Job Postings" || authorName === "City Job Postings");
+
+        if (isJobPosting) {
+          const boilerplate = "Our mission is to work together to build a safe, vibrant, and sustainable city for all Chattanoogans. To do that, it takes a team of skilled and passionate individuals. So, if you’d like to call Chattanooga home – or maybe you already do! – and want to further your career through meaningful work that makes a true impact where you live, we’d love to talk to you.";
+          const index = processedText.indexOf(boilerplate);
+          if (index !== -1) {
+            processedText = processedText.substring(index + boilerplate.length).trim();
+          }
+        }
+
         let pubDate = "";
         if (post.date_published) {
           const d = new Date(post.date_published);
@@ -476,7 +480,8 @@
         const imgTag = imageSrc ? `<img src="${imageSrc}" class="post-image" onerror="this.parentElement.removeChild(this)">` : '';
         const cleanText = processedText.length > 400 ? processedText.substring(0, 400) + "..." : processedText;
         
-        const titleTag = (activeFilter === "City Job Postings" && post.title) ? `<p style="margin-top: 0; margin-bottom: 8px;"><strong>${post.title}</strong></p>` : '';
+        // Render bold title if the card belongs to a Job Posting
+        const titleTag = (isJobPosting && post.title) ? `<p style="margin-top: 0; margin-bottom: 8px;"><strong>${post.title}</strong></p>` : '';
         const textTag = (cleanText || titleTag) ? `<div class="post-content">${titleTag}${cleanText ? `<p>${cleanText}</p>` : ''}</div>` : '';
         
         const authorTag = `<span class="post-author"><span>${pubDate}</span><span>${authorName}</span></span>`;
