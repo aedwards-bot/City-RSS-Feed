@@ -28,7 +28,7 @@
       font-family: -apple-system, system-ui, sans-serif;
       background-color: var(--bg-color);
       margin: 0;
-      padding: 0; /* Reset for banner flushness */
+      padding: 0;
       top: 0 !important;
     }
 
@@ -53,7 +53,7 @@
       font-size: 14px;
       line-height: 1.5;
       margin: 0;
-      flex-grow: 1; /* Makes text span the whole middle section */
+      flex-grow: 1;
       padding: 0 15px;
     }
 
@@ -177,4 +177,332 @@
       border: 1px solid #cbd5e1;
       border-radius: 30px;
       outline: none;
-      background:
+      background: white;
+      box-sizing: border-box;
+    }
+
+    #searchBar {
+      flex: 2;
+      min-width: 280px;
+    }
+
+    #authorFilter {
+      flex: 1;
+      min-width: 200px;
+      cursor: pointer;
+    }
+
+    /* Optimized Feed Layout */
+    .feed-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: flex-start;
+    }
+
+    .column {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Post Cards */
+    .post-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      background-color: #eee;
+    }
+
+    .post-content {
+      padding: 20px;
+    }
+
+    .post-card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0;
+      color: #334155;
+    }
+
+    .post-author {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px 18px 20px;
+      font-size: 0.75rem;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    #status-msg {
+      text-align: center;
+      padding: 40px;
+      color: #64748b;
+      width: 100%;
+    }
+
+    /* Mobile Responsive Tweaks */
+    @media (max-width: 768px) {
+      .i-team-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+      }
+      .banner-text { padding: 0; }
+      .header h1 { font-size: 1.5rem; }
+      .column { min-width: 100%; }
+      .post-content { padding: 15px; }
+      .post-author { padding: 0 15px 15px 15px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="i-team-banner">
+    <img src="logo.png" alt="Chattanooga Logo" class="banner-logo">
+    <p class="banner-text">
+      This site is a prototype currently being tested by the Chattanooga Innovation Team (i-team) — it was built in direct response to what residents told us they need: better access to updates, information, and resources. The Chattanooga i-team works alongside community members, local organizations, and city departments to turn gaps into opportunities. We are still working to improve this tool based on resident feedback, please take our survey to let us know what would make this tool more useful.
+    </p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeiqIRddsindAw5gyvsWw0bCnnbzBgxh0-rZzzk7JJ1WYTziQ/viewform?usp=sharing&ouid=103538615642769301622" target="_blank" class="survey-button">User Survey</a>
+  </div>
+
+  <div id="google_translate_element"></div>
+
+  <div class="header">
+    <h1>City of Chattanooga News & Updates</h1>
+
+    <div class="language-controls">
+      <span>ENGLISH</span>
+      <label class="switch">
+        <input type="checkbox" id="langToggle" onchange="toggleLanguage()">
+        <span class="slider"></span>
+      </label>
+      <span>ESPAÑOL</span>
+    </div>
+
+    <div class="filter-controls">
+      <input type="text" id="searchBar" placeholder="Search news..." onkeyup="applyFilters()">
+      <select id="authorFilter" onchange="handleAuthorChange()">
+      </select>
+    </div>
+  </div>
+
+  <div id="status-msg">Initializing news feed...</div>
+
+  <div id="news-wall" class="feed-container">
+    <div class="column" id="col-1"></div>
+    <div class="column" id="col-2"></div>
+    <div class="column" id="col-3"></div>
+  </div>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <script>
+    const FEED_MAP = {
+      "All News": "_KxzixUygzbdzu5KA",
+      "City of Chattanooga": "PdN33cuT336K8vmC",
+      "City Job Postings": "qKe272dsP2brLIb5",
+      "Mayor's Updates": "LTs3Zw710ixkkYP7",
+      "311": "NQ181GaRdZgtNKvu",
+      "Arts, Culture, & Creative Economy": "lGTNdiDM9ecyOkNw",
+      "City Council": "Dg85HPBbJpF9xdPh",
+      "Community Development": "eIqe3O4Mlm44tyoP",
+      "Early Learning": "mXQ7ghtQUvXGP9FW",
+      "Family Justice Center": "GNEGjqByj59C1blF",
+      "Fire": "SrwJ0VaTUmXjeUjT",
+      "Library": "US5lBhTDrOIrDydn",
+      "Mayor's Council for Women": "1YjbzL9irBfdGl7C",
+      "Mayor's Council on Disability": "yBRlakwD2dcDSAd1",
+      "Mayor's Council on Livability and Aging": "145MgxnRLU94ZbCa",
+      "Mayor's Youth Council": "82uM5mcbpkIo93Od",
+      "National Park City": "He5YPMK6X7e3y8iM",
+      "Office of Community Health": "eSt1Pg9lB8gSmXYJ",
+      "Office of Family Empowerment": "vgd2eIj4ItLXG65T",
+      "Outdoor Chattanooga": "XVe7oDNfYyUXZOSu",
+      "Parks & Outdoors": "8hFrcyckecmlRG7k",
+      "Police": "fcbU6eKnKMNpgYtd",
+      "Public Works": "zHd32de2UhbxklCC",
+      "Regional Planning Agency": "cFN86DkPgWksrrOs",
+      "Wastewater": "DvnvLL2j92fAm7dz"
+    };
+
+    const CATEGORY_LIST = [
+      "All News", "City of Chattanooga", "City Job Postings", "Mayor's Updates", "311", "Arts, Culture, & Creative Economy",
+      "City Council", "Community Development", "Early Learning", "Family Justice Center",
+      "Fire", "Library", "Mayor's Council for Women", "Mayor's Council on Disability",
+      "Mayor's Council on Livability and Aging", "Mayor's Youth Council", "National Park City",
+      "Office of Community Health", "Office of Family Empowerment", "Outdoor Chattanooga",
+      "Parks & Outdoors", "Police", "Public Works", "Regional Planning Agency", "Wastewater"
+    ];
+
+    let dropdownInitialized = false;
+
+    function toggleLanguage() {
+      const isSpanish = document.getElementById('langToggle').checked;
+      const combo = document.querySelector('.goog-te-combo');
+      if (combo) {
+        combo.value = isSpanish ? 'es' : 'en';
+        combo.dispatchEvent(new Event('change'));
+      }
+    }
+
+    async function loadNews(selectedAuthor = "All News") {
+      const status = document.getElementById('status-msg');
+      const feedId = FEED_MAP[selectedAuthor] || FEED_MAP["All News"];
+      const fetchUrl = `https://rss.app/feeds/v1.1/${feedId}.json`;
+
+      try {
+        status.style.display = 'block';
+        status.innerText = `Updating feed for ${selectedAuthor}...`;
+        const response = await fetch(fetchUrl);
+        const data = await response.json();
+        if (!data.items || data.items.length === 0) {
+          status.innerText = "No announcements found.";
+          return;
+        }
+
+        data.items.sort((a, b) => new Date(b.date_published) - new Date(a.date_published));
+
+        if (!dropdownInitialized) {
+          populateDropdown();
+        }
+
+        status.style.display = 'none';
+        distributePosts(data.items, selectedAuthor);
+      } catch (err) {
+        status.innerHTML = `<div style="color:red;">Error loading news.</div>`;
+      }
+    }
+
+    function populateDropdown() {
+      const filter = document.getElementById('authorFilter');
+      filter.innerHTML = '';
+      CATEGORY_LIST.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat;
+        filter.appendChild(option);
+      });
+      dropdownInitialized = true;
+    }
+
+    function distributePosts(posts, activeFilter) {
+      const cols = [document.getElementById('col-1'), document.getElementById('col-2'), document.getElementById('col-3')];
+      cols.forEach(c => c.innerHTML = "");
+
+      let visibleCount = 0;
+      posts.forEach((post) => {
+        let imageSrc = post.image || post.thumbnail;
+        if (!imageSrc && post.attachments && post.attachments[0]) imageSrc = post.attachments[0].url;
+        if (!imageSrc && post.description_html && post.description_html.includes('<img')) {
+          const match = post.description_html.match(/<img[^>]+src="([^">]+)"/);
+          if (match) imageSrc = match[1];
+        }
+
+        const rawText = (post.content_text || "").trim();
+        
+        let processedText = rawText;
+        if (activeFilter === "City Job Postings") {
+          const boilerplate = "Our mission is to work together to build a safe, vibrant, and sustainable city for all Chattanoogans. To do that, it takes a team of skilled and passionate individuals. So, if you’d like to call Chattanooga home – or maybe you already do! – and want to further your career through meaningful work that makes a true impact where you live, we’d love to talk to you.";
+          const index = processedText.indexOf(boilerplate);
+          if (index !== -1) {
+            processedText = processedText.substring(index + boilerplate.length).trim();
+          }
+        }
+
+        let authorName = (post.authors && post.authors[0]) ? post.authors[0].name : "";
+
+        const NAME_CLEANUP = {
+          "Chattanooga Office of Arts, Culture & Creative Economy": "Arts, Culture, & Creative Economy",
+          "Chattanooga Parks and Outdoors": "Parks & Outdoors",
+          "City of Chattanooga - Government": "City of Chattanooga",
+          "The City of Chattanooga Department of Early Learning": "Early Learning"
+        };
+
+        if (activeFilter !== "All News") {
+          authorName = activeFilter;
+        } else {
+          if (NAME_CLEANUP[authorName]) {
+            authorName = NAME_CLEANUP[authorName];
+          } else {
+            const normRaw = authorName.toLowerCase().replace(/ and /g, " & ");
+            const matchedCategory = CATEGORY_LIST.find(cat => {
+              if (cat === "All News") return false;
+              const normCat = cat.toLowerCase().replace(/ and /g, " & ");
+              return normRaw.includes(normCat);
+            });
+            if (matchedCategory) authorName = matchedCategory;
+          }
+        }
+
+        let pubDate = "";
+        if (post.date_published) {
+          const d = new Date(post.date_published);
+          pubDate = d.toLocaleDateString(undefined, {
+            month: 'short',
+            day: 'numeric'
+          });
+        }
+
+        const imgTag = imageSrc ? `<img src="${imageSrc}" class="post-image" onerror="this.parentElement.removeChild(this)">` : '';
+        const cleanText = processedText.length > 400 ? processedText.substring(0, 400) + "..." : processedText;
+        
+        const titleTag = (activeFilter === "City Job Postings" && post.title) ? `<p style="margin-top: 0; margin-bottom: 8px;"><strong>${post.title}</strong></p>` : '';
+        const textTag = (cleanText || titleTag) ? `<div class="post-content">${titleTag}${cleanText ? `<p>${cleanText}</p>` : ''}</div>` : '';
+        
+        const authorTag = `<span class="post-author"><span>${pubDate}</span><span>${authorName}</span></span>`;
+
+        const cardHtml = `<a href="${post.url}" class="post-card" target="_blank">${imgTag}${textTag}${authorTag}</a>`;
+        
+        cols[visibleCount % 3].insertAdjacentHTML('beforeend', cardHtml);
+        visibleCount++;
+      });
+    }
+
+    function handleAuthorChange() {
+      const selectedAuthor = document.getElementById('authorFilter').value;
+      loadNews(selectedAuthor);
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('searchBar').value.toLowerCase();
+      document.querySelectorAll('.post-card').forEach(card => {
+        const matches = card.innerText.toLowerCase().includes(query);
+        card.style.display = matches ? "block" : "none";
+      });
+    }
+
+    loadNews("All News");
+  </script>
+</body>
+
+</html>
