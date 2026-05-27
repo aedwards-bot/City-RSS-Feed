@@ -1,8 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-B65HYD2H60"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -12,7 +12,6 @@
   gtag('config', 'G-B65HYD2H60');
 </script>
 
- 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>City of Chattanooga News & Updates</title>
@@ -467,7 +466,11 @@
 
         const imgTag = imageSrc ? `<img src="${imageSrc}" class="post-image" onerror="this.parentElement.removeChild(this)">` : '';
         const cleanText = rawText.length > 400 ? rawText.substring(0, 400) + "..." : rawText;
-        const textTag = cleanText ? `<div class="post-content"><p>${cleanText}</p></div>` : '';
+        
+        // Custom change for City Job Postings view: Add bold title above description
+        const titleTag = (activeFilter === "City Job Postings" && post.title) ? `<p style="margin-top: 0; margin-bottom: 8px;"><strong>${post.title}</strong></p>` : '';
+        const textTag = (cleanText || titleTag) ? `<div class="post-content">${titleTag}${cleanText ? `<p>${cleanText}</p>` : ''}</div>` : '';
+        
         const authorTag = `<span class="post-author"><span>${pubDate}</span><span>${authorName}</span></span>`;
 
         const cardHtml = `<a href="${post.url}" class="post-card" target="_blank">${imgTag}${textTag}${authorTag}</a>`;
