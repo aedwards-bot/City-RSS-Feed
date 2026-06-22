@@ -1,21 +1,21 @@
 name: Update City Feed
 on:
   schedule:
-    - cron: '0 * * * *' # Runs automatically at the top of every hour
-  workflow_dispatch: # Allows you to click a button to run it manually
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   update-feed:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Allows the bot to save the new JSON file to your repo
+      contents: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Updated to clear the warning
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Updated to clear the warning
         with:
           python-version: '3.10'
 
@@ -27,12 +27,12 @@ jobs:
       - name: Run AI Feed Parser
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python city_feed_parser.py
+        run: python city_feed_parcer.py # Fixed spelling to match your file exactly
 
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add processed_city_feed.json processed_city_guids.txt
+          git add .
           git commit -m "Automated AI feed update" || exit 0
           git push
