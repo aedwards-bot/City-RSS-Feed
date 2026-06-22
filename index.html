@@ -327,35 +327,6 @@
   <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <script>
-    const FEED_MAP = {
-      "All News": "_KxzixUygzbdzu5KA",
-      "Events": "UCma6BIDGdYc5ElW",
-      "City of Chattanooga": "PdN33cuT336K8vmC",
-      "City Job Postings": "qKe272dsP2brLIb5",
-      "Mayor's Updates": "LTs3Zw710ixkkYP7",
-      "311": "NQ181GaRdZgtNKvu",
-      "Arts, Culture, & Creative Economy": "lGTNdiDM9ecyOkNw",
-      "City Council": "Dg85HPBbJpF9xdPh",
-      "Community Development": "eIqe3O4Mlm44tyoP",
-      "Early Learning": "mXQ7ghtQUvXGP9FW",
-      "Family Justice Center": "GNEGjqByj59C1blF",
-      "Fire": "SrwJ0VaTUmXjeUjT",
-      "Library": "US5lBhTDrOIrDydn",
-      "Mayor's Council for Women": "1YjbzL9irBfdGl7C",
-      "Mayor's Council on Disability": "yBRlakwD2dcDSAd1",
-      "Mayor's Council on Livability and Aging": "145MgxnRLU94ZbCa",
-      "Mayor's Youth Council": "82uM5mcbpkIo93Od",
-      "National Park City": "He5YPMK6X7e3y8iM",
-      "Office of Community Health": "eSt1Pg9lB8gSmXYJ",
-      "Office of Family Empowerment": "vgd2eIj4ItLXG65T",
-      "Outdoor Chattanooga": "XVe7oDNfYyUXZOSu",
-      "Parks & Outdoors": "8hFrcyckecmlRG7k",
-      "Police": "fcbU6eKnKMNpgYtd",
-      "Public Works": "zHd32de2UhbxklCC",
-      "Regional Planning Agency": "cFN86DkPgWksrrOs",
-      "Wastewater": "DvnvLL2j92fAm7dz"
-    };
-
     const CATEGORY_LIST = [
       "All News", "Events", "City of Chattanooga", "City Job Postings", "Mayor's Updates", "311", "Arts, Culture, & Creative Economy",
       "City Council", "Community Development", "Early Learning", "Family Justice Center",
@@ -366,6 +337,7 @@
     ];
 
     let dropdownInitialized = false;
+    let cachedItems = [];
 
     function toggleLanguage() {
       const isSpanish = document.getElementById('langToggle').checked;
@@ -378,29 +350,30 @@
 
     async function loadNews(selectedAuthor = "All News") {
       const status = document.getElementById('status-msg');
-      const feedId = FEED_MAP[selectedAuthor] || FEED_MAP["All News"];
-      const fetchUrl = `https://rss.app/feeds/v1.1/${feedId}.json`;
+      const fetchUrl = `./processed_city_feed.json`;
 
       try {
         status.style.display = 'block';
-        status.innerText = `Updating feed for ${selectedAuthor}...`;
+        status.innerText = `Loading city updates...`;
+        
         const response = await fetch(fetchUrl);
         const data = await response.json();
-        if (!data.items || data.items.length === 0) {
+        
+        cachedItems = data;
+
+        if (!cachedItems || cachedItems.length === 0) {
           status.innerText = "No announcements found.";
           return;
         }
-
-        data.items.sort((a, b) => new Date(b.date_published) - new Date(a.date_published));
 
         if (!dropdownInitialized) {
           populateDropdown();
         }
 
         status.style.display = 'none';
-        distributePosts(data.items, selectedAuthor);
+        distributePosts(cachedItems, selectedAuthor);
       } catch (err) {
-        status.innerHTML = `<div style="color:red;">Error loading news.</div>`;
+        status.innerHTML = `<div style="color:red;">Error loading news. Make sure processed_city_feed.json exists.</div>`;
       }
     }
 
@@ -421,46 +394,22 @@
       cols.forEach(c => c.innerHTML = "");
 
       let visibleCount = 0;
+      
       posts.forEach((post) => {
-        let imageSrc = post.image || post.thumbnail;
-        if (!imageSrc && post.attachments && post.attachments[0]) imageSrc = post.attachments[0].url;
-        if (!imageSrc && post.description_html && post.description_html.includes('<img')) {
-          const match = post.description_html.match(/<img[^>]+src="([^">]+)"/);
-          if (match) imageSrc = match[1];
+        // --- FILTERING LOGIC ---
+        if (activeFilter === "Events") {
+          // If "Events" is selected, skip anything the AI didn't flag
+          if (post.is_event !== true) return; 
+        } else if (activeFilter !== "All News") {
+          // If a specific department is selected, match against the department name
+          if (post.department !== activeFilter) return;
         }
 
-        // Determine the item's mapped author/category first
-        let authorName = (post.authors && post.authors[0]) ? post.authors[0].name : "";
+        // --- RENDER LOGIC ---
+        const imageSrc = post.image; 
+        let processedText = (post.content_text || "").trim();
 
-        const NAME_CLEANUP = {
-          "Chattanooga Office of Arts, Culture & Creative Economy": "Arts, Culture, & Creative Economy",
-          "Chattanooga Parks and Outdoors": "Parks & Outdoors",
-          "City of Chattanooga - Government": "City of Chattanooga",
-          "The City of Chattanooga Department of Early Learning": "Early Learning"
-        };
-
-        if (activeFilter !== "All News") {
-          authorName = activeFilter;
-        } else {
-          if (NAME_CLEANUP[authorName]) {
-            authorName = NAME_CLEANUP[authorName];
-          } else {
-            const normRaw = authorName.toLowerCase().replace(/ and /g, " & ");
-            const matchedCategory = CATEGORY_LIST.find(cat => {
-              if (cat === "All News") return false;
-              const normCat = cat.toLowerCase().replace(/ and /g, " & ");
-              return normRaw.includes(normCat);
-            });
-            if (matchedCategory) authorName = matchedCategory;
-          }
-        }
-
-        const rawText = (post.content_text || "").trim();
-        let processedText = rawText;
-
-        // Apply cleaning rule if on Job Postings page OR if the specific item belongs to Job Postings
-        const isJobPosting = (activeFilter === "City Job Postings" || authorName === "City Job Postings");
-
+        const isJobPosting = (activeFilter === "City Job Postings" || post.department === "City Job Postings");
         if (isJobPosting) {
           const boilerplate = "Our mission is to work together to build a safe, vibrant, and sustainable city for all Chattanoogans. To do that, it takes a team of skilled and passionate individuals. So, if you’d like to call Chattanooga home – or maybe you already do! – and want to further your career through meaningful work that makes a true impact where you live, we’d love to talk to you.";
           const index = processedText.indexOf(boilerplate);
@@ -472,19 +421,17 @@
         let pubDate = "";
         if (post.date_published) {
           const d = new Date(post.date_published);
-          pubDate = d.toLocaleDateString(undefined, {
-            month: 'short',
-            day: 'numeric'
-          });
+          pubDate = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
         }
 
         const imgTag = imageSrc ? `<img src="${imageSrc}" class="post-image" onerror="this.parentElement.removeChild(this)">` : '';
         const cleanText = processedText.length > 400 ? processedText.substring(0, 400) + "..." : processedText;
         
-        // Render bold title if the card belongs to a Job Posting
         const titleTag = (isJobPosting && post.title) ? `<p style="margin-top: 0; margin-bottom: 8px;"><strong>${post.title}</strong></p>` : '';
         const textTag = (cleanText || titleTag) ? `<div class="post-content">${titleTag}${cleanText ? `<p>${cleanText}</p>` : ''}</div>` : '';
         
+        // Display the department name your Python script attached
+        const authorName = post.department || "City Update";
         const authorTag = `<span class="post-author"><span>${pubDate}</span><span>${authorName}</span></span>`;
 
         const cardHtml = `<a href="${post.url}" class="post-card" target="_blank">${imgTag}${textTag}${authorTag}</a>`;
@@ -496,7 +443,7 @@
 
     function handleAuthorChange() {
       const selectedAuthor = document.getElementById('authorFilter').value;
-      loadNews(selectedAuthor);
+      distributePosts(cachedItems, selectedAuthor);
     }
 
     function applyFilters() {
