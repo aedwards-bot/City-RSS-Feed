@@ -1,5 +1,31 @@
 [
   {
+    "url": "https://chattanooga.gov/things-to-do/calendar/music-movement-ages-0-5",
+    "image": "https://chattanooga.gov/sites/default/files/2024-10/CHA_FB_Preview_1200x630.png",
+    "content_text": "Get up and go!\u00a0\u00a0Jump, wiggle, dance, and jiggle! Children ages 0-5 (and their grownups) are invited to Music & Movement at Eastgate every Monday morning at 10 am. We\u2019ll explore music through song and dance with shaky eggs, scarves, parachute, and more.",
+    "department": "Events",
+    "is_event": true,
+    "date_published": "",
+    "authors": [
+      {
+        "name": "City of Chattanooga Events"
+      }
+    ]
+  },
+  {
+    "url": "https://chattanooga.gov/things-to-do/calendar/family-storytime-south-chatt-ages-0-5-4",
+    "image": "https://chattanooga.gov/sites/default/files/2024-10/CHA_FB_Preview_1200x630.png",
+    "content_text": "Family Storytime is a program for little ones ages 0-5 and their grownups. We\u2019ll have stories, fingerplays, music and much more! Join the fun at our South Chatt Library every Thursday at 10:00 am. We are adding another day for Family Storytime starting Saturday, June 6th at 10am!",
+    "department": "Events",
+    "is_event": true,
+    "date_published": "",
+    "authors": [
+      {
+        "name": "City of Chattanooga Events"
+      }
+    ]
+  },
+  {
     "url": "https://chattanooga.gov/things-to-do/calendar/adventure-days-zoo",
     "image": "https://chattanooga.gov/sites/default/files/2024-10/CHA_FB_Preview_1200x630.png",
     "content_text": "Join us for a fun series of Adventure Days at Chattanooga Zoo! On the dates listed below, all Chattanooga Public Library card holders ages 18 and under will get FREE admission to the Zoo, plus hands-on activities provided by your favorite library. Make sure to bring your library card to the ticket booth! On each Adventure Day, our own Cindy Minter will host story time at 11 a.m. and 12 p.m. March 22 | 9:00 AM \u2013 5:00 PM June 28 | 9:00 AM \u2013 5:00 PM September 20 | 9:00 AM \u2013 5:00 PM December 20 | 9:00 AM \u2013 5:00 PM",
@@ -3867,32 +3893,6 @@
     "department": "Outdoor Chattanooga",
     "is_event": false,
     "date_published": "Tue, 16 Jun 2026 13:48:13 GMT",
-    "authors": [
-      {
-        "name": "Outdoor Chattanooga"
-      }
-    ]
-  },
-  {
-    "url": "https://m.facebook.com/outdoorchattanooga/posts/pfbid02ugwKDMBG6DyHhKRYFVwQzQvJ42XyxxnqQSJtiHx4REUAtVTyi98yw5mJbeEwXDz9l",
-    "image": "https://ipxy.io/img/eyJpdiI6IjE4ZDZmYTVmMWE4ZmQ3NjFlYTc2ZTIyOGQ5Mjg3ZGUzIiwiZW5jcnlwdGVkRGF0YSI6IjQxNjdlODdmNzFlNDFiMzRjMGNmMDYzNDgwNTFlNzAyYmU2MmZhNWEyN2YxYjE0MTg4NmI2ZDJhZTkyNWI0NjlmOWNmMDBkZDllNGQzNzA5MzJjMzc2MmMzYjFlNmM1MzBkYjVkOGNiMDQzM2M1Yjk2ZGFjZTc2NWNjMmFjYzg4ZDRkNDhiNWNjNDA2YWRlNTE4MGIxZjBmMDBlY2VlYmJiODVhMjBkMjQ5OWU1NzVlZjRkMWQ0YjBiZjkzMWYzZWM4ZTRkNmVlZjlkZGIwODcyYzBmODk0NTU5NmQ3N2FkZDY4MDUxNTk1NjBhMzgzMzJhZDYyNzBiYzhkNWU0NDE2ZGMzMTdjOTI3ZGVmOTM0NmQ2OTYwMGFjM2YxMTQxZjBhMDJhZjZmNzc0N2U0MzFkNGM5ZWQ4ZmQ1YTE2ZmRlM2YzN2NlMWVmN2U4MTFhOWM1YjA0YjNmNmZlOWFhM2I3MjVmNDE2OWNkMTlhMGI1MTE3ZTgxMjJmMjhhZWVlNGE0MDViMzhjOWZmN2ZlMGNkMDgyN2Q2MGNmMjE3YzA2ZmFiODVhMjY3ODIwNTY2M2UxOWI3NWQ3MWI3ZmM2MGNjMWEzZTg3ZmVjZTEyNTJjMTY4YmQwYzRhZTI5YWM1NTU3ZGFjY2NiMjgxMDk4YjRhODFkMDAzYWYwNzhmZjVmMTNlNzhjODFhMGI2YjM0MzA5NDRjODY3NjgxMjA1YjA2ODEwODNhNjI3MWIzM2NlZWIxZjIwZmI2OTVjNjhmNGMxNGVlNTAzOGEwZjAyOTg2NjZjYjM1OWY4MDlmMDJmZjY3YTU0NTZjYzI0M2JlYzcxOTMyZGE0MGVkMzUwZWNjMTRmM2FjZDMxMTI2Y2NkNGE1MWYyYWIxNTdmYWY4NzU0ZGExOGM4NzBjYTlkNTQ3ODE3YjUxNmE4ZGViOWJiMzhjY2RlZWY2ODY3ZGFmNjA4MjUwNjBmNDAzZDAxZmEzNDZlY2M1MzE3YjEwNWQ3ZDkyZGE2NDAwY2NhOTkyYzRjYjgwMmRiNzRiNTM5MDA5NjcyODZiNWY4MDYzOTY1ODQ5MjgxZDEzZDMwZDQ4ZTQ4MGMwYjkwNTU5MjA1N2EyNzQ0MGFmMDNjNWEwZDFkZjAxMmZlNjM3Njk0M2E1ZWQ5ZWZiNGQyOGNhNGZjMjMwNDkzOTAxOGUzYTkyMDgxIiwiYXJ0aWNsZUlkIjoiN2FjYzExZmUwNjBiNjZkMmI2MTk2NmJmYTk2YTk4OTMifQ==",
-    "content_text": "The outdoors belong to everyone! \ud83c\udf3f\ud83c\udff3\ufe0f\u200d\ud83c\udf08Join us for Hike with Pride at Stringer\u2019s Ridge\u2014a self-paced community hike celebrating nature, identity, and togetherness. Come on your own schedule, hit the trails, and enjoy some awesome perks along the way:  \ud83d\ude90 Fun activities with the @chattlibrary outreach van, Poppy!  \ud83c\udf79 Refreshing, cold beverages provided by @heyplantbar to keep you hydrated! \ud83d\udcc5 When: Saturday, June 27 | 5:30 PM - 8:30 PM  \ud83d\udccd Where: Stringer\u2019s Ridge (1312 Spears Ave.)  \ud83d\udcb8 Cost: FREE!  All skill levels, paces, and abilities are welcome. Drop a \ud83e\udd7e in the comments if we\u2019ll see you there! For more details, visit outdoorchattanooga.com.",
-    "department": "Outdoor Chattanooga",
-    "is_event": true,
-    "date_published": "Mon, 15 Jun 2026 18:52:21 GMT",
-    "authors": [
-      {
-        "name": "Outdoor Chattanooga"
-      }
-    ]
-  },
-  {
-    "url": "https://m.facebook.com/outdoorchattanooga/posts/pfbid0cd6QMVEhCQGHWn2PDoj2PmdMWi8GsL9cStum7gxGrZTRNJ9L1CkUKtTeTcdmEbLl",
-    "image": "https://ipxy.io/img/eyJpdiI6IjE4ZDZmYTVmMWE4ZmQ3NjFlYTc2ZTIyOGQ5Mjg3ZGUzIiwiZW5jcnlwdGVkRGF0YSI6IjQxNjdlODdmNzFlNDFiMzRjMGNmMDYzNDgwNTFlNzAyYmU2MmZhNWEyN2YxYjE0MTg4NmI2ZDJhZTkyNWI0NjlmOWNmMDBkZDllNGQzNzA5MzJjMzc2MmMzYjFlNmM1Mzk5YTM1NjcxNjU2OTU4M2ZmZTNlNWYxZDYwZTA4MTllZmIyMzFlYTQyZGZhZTJhMWE3MGU4YmEzNjI2MDc1NjFhNjdjNjQyYWZjM2Q5YTU4MjI1NzE1NGMwNjY4NDFjYzUzNDI4ZDBjMTJlMjIzZjFmMDQyNTk0YzkwZTMzZDI0ZGM1ZDJjNjBkOGU5NzhkNWM5ODIwOGI4ZTllODAwNTQxOWYyZWEyZTMzZDIzMzU3ZmExMzRlMDY3ZmRiNzFhNzhjOTNjOTI5ZDhjM2UxMmNjZmY3NmEwYjhjOTFjNGZiNzNiYzE1YTllNGEyMGFlZTAyZTRjMDFmZTZlMjIyNmVjNzFjODAxMjcyMTg1YTNjNWEyZjI5MWU1NDY5OTkzZTRmY2JkYTU5OWVkMTc0YzU0MTMyOGY5OWI3ZGUyOTI3Zjg0ZGUzYTA2ZjFlMjU0YWU4YTlhZjU3MDllN2I4ZGEzM2RmNDNiMWU4NTcyNDllMjU3ZjkzYTM5ZjMyM2M5ZTA4MjM3ZWYwNDMzZjljNGM4MDdjZWIyNTY1MWQyOWYxOWQ3YTljM2NmNTZmYWVkMTFmOTEwNzBjYzYxYmE3YWE4YWVhOTkzODU2NmQ4NmUzODFjYzZmNzc3Mjk3MTIxYmUxZDhjZGM3MjZhMDY5YjgxOTZjNzU2Y2IwN2I3ODU1NzNmMzdkNzgwOTI0MmRjOTMyZDBmYmMxYzI1YzM2ZWZiMmJhODA4YzEwOTk4M2M5MjVmZTA1Y2YzOTMyNDAzMTVhZTZiN2ZhOWUzZTAzYzVkZTU1NWE3NjM5MTNmN2M1Mzc5ZjM0OTNiZTMxZGNmODA0MTA0NTRkNjgwZjk0NDYxZDcwZWQxOWViYTI5Y2E2ZmZjMTU0NDhjNmY0MDY1NTJiYTM1YWVjY2MxZjE3NWEwNDQzMTI0OGU3MGUyMWE4ZDBjOTRkMGFhMDRiZWQ0MTQzODAwYmNhYzMxYjRjYmM0N2QzMzkzOTc4ZmRjOWZmOTIwMGY4ZmFjYzc5MTA0MTlkMTk3MGU3YzQ3Yzg1NWZhZjk3OTBlZGU5ZTVkMDIxIiwiYXJ0aWNsZUlkIjoiMmM0NWQxZGNlY2VkOWViNWRkYmUyYTMwYTNkYWY5NWEifQ==",
-    "content_text": "Bring the fam to Greenway Farms! Happening now Free outdoor activities for the whole family \ud83d\ude42\u200d\u2195\ufe0f\ud83d\udc4f\ud83c\udf33\u2600\ufe0f FREE FAMILY FUN IS BACK! \u2600\ufe0f\ud83c\udf33 Get outside, connect with your community, and discover the Power of Parks with Outdoor Chattanooga\u2019s Family Fun Days! \ud83d\udccd June 14 \u2013 Greenway Farm \ud83d\udccd July 12 \u2013 Greenway Farm \ud83d\udccd August 29 \u2013 Coolidge Park \u23f0 11 AM\u20133 PM \ud83d\udc9a FREE for all ages Bring the kids, invite your neighbors, and join us for three days of outdoor adventure, play, and fun this summer!",
-    "department": "Outdoor Chattanooga",
-    "is_event": true,
-    "date_published": "Sun, 14 Jun 2026 15:43:04 GMT",
     "authors": [
       {
         "name": "Outdoor Chattanooga"
